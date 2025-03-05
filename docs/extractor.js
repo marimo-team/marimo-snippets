@@ -41,22 +41,25 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create the button
         const button = document.createElement('button');
         button.className = 'url-copy-button';
-        button.innerHTML = '🔗';
         button.title = 'Open code in new tab';
         button.style.position = 'absolute';
         button.style.top = '0.5rem';
         button.style.right = '0.5rem';
-        button.style.background = 'rgba(255, 255, 255, 0.7)';
         button.style.border = 'none';
         button.style.borderRadius = '4px';
         button.style.padding = '4px 8px';
+        button.style.margin = '-4px 22px';
         button.style.cursor = 'pointer';
         button.style.zIndex = '10';
-        
+        button.style.filter = 'grayscale(100%)';
+        button.innerHTML = '<img src="icon.svg" alt="icon" width="20" height="20">';
         // Ensure the pre element has a relative position for button placement
         if (getComputedStyle(preElement).position === 'static') {
           preElement.style.position = 'relative';
         }
+
+        button.addEventListener("mouseover", function() { button.style.filter = "grayscale(0%)"; });
+        button.addEventListener("mouseout", function() { button.style.filter = 'grayscale(100%)'; });
         
         // Add click event to the button
         button.addEventListener('click', function(e) {

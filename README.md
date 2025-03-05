@@ -9,10 +9,7 @@ This approach expects an HTML comment above a codeblock to work.
 Here is one example: 
 
 ````md
-# Welcome to MkDocs
-
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
-
+This is a demo site.
 
 ```python
 a = 1
@@ -28,4 +25,4 @@ def hello_world():
 <script src="extractor.js"></script>
 ````
 
-Notice how the first codeblock does not have a comment but the second one does? 
+Notice how the first codeblock does not have a comment but the second one does? The second codeblock will get an extra button added to it that will send the code to the specified URL as a query string.

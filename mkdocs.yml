@@ -1,7 +1,13 @@
-site_name: My Docs
+site_name: copy feature demo
 theme:
   name: material
+  features:
+    - content.code.copy
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
   - pymdownx.superfences
