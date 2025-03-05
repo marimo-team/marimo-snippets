@@ -26,3 +26,9 @@ def hello_world():
 ````
 
 Notice how the first codeblock does not have a comment but the second one does? The second codeblock will get an extra button added to it that will send the code to the specified URL as a query string.
+
+To run this locally, you only need mkdocs. 
+
+```bash
+uv run --with mkdocs-material mkdocs serve
+```
