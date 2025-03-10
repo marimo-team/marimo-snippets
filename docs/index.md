@@ -8,10 +8,12 @@ a = 1
 b = 2
 ```
 
-<!-- url-copy: https://python.playground.com param-name: source -->
+<!-- url-copy: https://marimo.app param-name: code -->
 ```python
 def hello_world():
     print("Hello, World!")
+
+hello_world()
 ```
 
 <script src="extractor.js"></script>
