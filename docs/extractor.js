@@ -83,7 +83,7 @@ ${code.split('\n').map(line => '    ' + line).join('\n')}
           const encodedCode = encodeURIComponent(code);
 
           // Create the URL with the code as a query param
-          const url = `${foundConfig.url}/?${foundConfig.paramName}=${encodedCode}`;
+          const url = `${foundConfig.url}?${foundConfig.paramName}=${encodedCode}`;
 
           // Open the URL in a new tab
           window.open(url, '_blank');
