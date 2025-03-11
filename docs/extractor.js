@@ -118,3 +118,84 @@ ${code.split('\n').map(line => '    ' + line).join('\n')}
     }
   });
 }
+
+/**
+ * Adds iframes below code blocks to display Marimo notebooks inline
+ * @param {string[]} elements - CSS selectors for elements to add iframes to. Default: ['pre', 'div.highlight']
+ * @param {Object} settings - Iframe customization options
+ * @param {string} [settings.height='400px'] - Height of the iframe
+ * @param {string} [settings.width='100%'] - Width of the iframe
+ * @param {string} [settings.border='1px solid #ddd'] - Border style of the iframe
+ * @param {string} [settings.borderRadius='4px'] - Corner radius of the iframe
+ * @param {string} [settings.margin='1rem 0'] - Margin around the iframe
+ * @param {string} [settings.url='https://marimo.app'] - Base URL for the Marimo instance
+ * @param {string} [settings.paramName='code'] - Query parameter name for the code
+ */
+function addMarimoIframes(elements = ['pre', 'div.highlight'], settings = {}) {
+  const preElements = document.querySelectorAll(elements);
+  preElements.forEach(preElement => {
+    // Check if there's a special comment before this pre element
+    let node = preElement.previousSibling;
+    let foundConfig = false;
+
+    // Look for HTML comments before the pre element
+    while (node && !foundConfig) {
+      if (node.nodeType === Node.COMMENT_NODE) {
+        const commentText = node.textContent.trim();
+        // Only proceed if we explicitly find the add-marimo-iframe comment
+        if (commentText.startsWith('add-marimo-iframe')) {
+          foundConfig = true;
+        }
+        break;  // Exit after finding any comment
+      }
+      node = node.previousSibling;
+    }
+
+    // If we found a config comment, add the iframe
+    if (foundConfig) {
+      const codeElement = preElement.querySelector('code');
+      if (codeElement) {
+        // Get the code text and prepare it
+        let code = codeElement.textContent;
+        code = `import marimo
+
+app = marimo.App()
+
+@app.cell
+def _():
+${code.split('\n').map(line => '    ' + line).join('\n')}
+`;
+        // Create default settings
+        const defaults = {
+          height: '400px',
+          width: '100%',
+          border: '1px solid #ddd',
+          borderRadius: '4px',
+          margin: '1rem 0',
+          url: 'https://marimo.app',
+          paramName: 'code'
+        };
+
+        const iframeSettings = Object.assign({}, defaults, settings);
+
+        // Create the iframe
+        const iframe = document.createElement('iframe');
+        iframe.style.height = iframeSettings.height;
+        iframe.style.width = iframeSettings.width;
+        iframe.style.border = iframeSettings.border;
+        iframe.style.borderRadius = iframeSettings.borderRadius;
+        iframe.style.margin = iframeSettings.margin;
+        
+        // Encode the code and create the URL
+        const encodedCode = encodeURIComponent(code);
+        const url = `${iframeSettings.url}?${iframeSettings.paramName}=${encodedCode}`;
+        
+        // Set the iframe source
+        iframe.src = url;
+        
+        // Insert the iframe after the code block
+        preElement.parentNode.insertBefore(iframe, preElement.nextSibling);
+      }
+    }
+  });
+}

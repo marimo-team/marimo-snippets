@@ -30,5 +30,6 @@ hello_world()
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         addMarimoButtons();
-    });
+        addMarimoIframes();
+});
 </script>
