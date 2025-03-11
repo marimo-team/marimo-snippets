@@ -1,7 +1,35 @@
+let buttonSettings = {
+  elements: ['pre', 'div.highlight'],
+  title: 'Open code in an interactive playground',
+  position: 'absolute',
+  top: '0.5rem',
+  right: '0.5rem',
+  border: 'none',
+  borderRadius: '4px',
+  padding: '4px 8px',
+  margin: '-4px 22px',
+  cursor: 'pointer',
+  zIndex: '10',
+  filter: 'grayscale(100%)',
+  icon: '<img src="icon.svg" alt="icon" width="20" height="20">',
+};
+
+let iframeSettings = {
+  elements: ['pre', 'div.highlight'],
+  height: '400px',
+  width: '100%',
+  border: '1px solid #ddd',
+  borderRadius: '4px',
+  margin: '1rem 0',
+  url: 'https://marimo.app',
+  paramName: 'code'
+};
+
+
 /**
- * Adds interactive buttons to code blocks that open the code in a Marimo playground
- * @param {string[]} elements - CSS selectors for elements to add buttons to. Default: ['pre', 'div.highlight']
+ * Configure interactive buttons for code blocks that open the code in a Marimo playground
  * @param {Object} settings - Button customization options
+ * @param {string[]} [settings.elements=['pre', 'div.highlight'] - CSS selectors for elements to add buttons to. Default: ['pre', 'div.highlight']
  * @param {string} [settings.title='Open code in an interactive playground'] - Button tooltip text
  * @param {string} [settings.position='absolute'] - CSS position property
  * @param {string} [settings.top='0.5rem'] - Distance from top of container
@@ -15,8 +43,35 @@
  * @param {string} [settings.filter='grayscale(100%)'] - Default filter applied to button
  * @param {string} [settings.icon='<img src="icon.svg" alt="icon" width="20" height="20">'] - HTML content for the button
  */
-function addMarimoButtons(elements = ['pre', 'div.highlight'], settings = {}){
-  const preElements = document.querySelectorAll(elements);
+function configureMarimoButtons(settings = {}) {
+  buttonSettings = { ...buttonSettings, ...settings };
+}
+
+/**
+* @param {Object} settings - Iframe customization options
+* @param {string[]} [settings.elements=['pre', 'div.highlight'] - CSS selectors for elements to add buttons to. Default: ['pre', 'div.highlight']
+* @param {string} [settings.height='400px'] - Height of the iframe
+* @param {string} [settings.width='100%'] - Width of the iframe
+* @param {string} [settings.border='1px solid #ddd'] - Border style of the iframe
+* @param {string} [settings.borderRadius='4px'] - Corner radius of the iframe
+* @param {string} [settings.margin='1rem 0'] - Margin around the iframe
+* @param {string} [settings.url='https://marimo.app'] - Base URL for the Marimo instance
+* @param {string} [settings.paramName='code'] - Query parameter name for the code
+*/
+function configureMarimoIframes(settings = {}) {
+  iframeSettings = { ...iframeSettings, ...settings };
+};
+
+
+/**
+ * Adds interactive buttons to code blocks that open the code in a Marimo playground
+ */
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll('script[type="text/x-codesend-config"]').forEach(script => {
+    eval(script.textContent);
+  });
+
+  const preElements = document.querySelectorAll(buttonSettings.elements);
   preElements.forEach(preElement => {
     // Check if there's a special comment before this pre element
     let node = preElement.previousSibling;
@@ -57,8 +112,6 @@ function addMarimoButtons(elements = ['pre', 'div.highlight'], settings = {}){
           filter: 'grayscale(100%)',
           icon: '<img src="icon.svg" alt="icon" width="20" height="20">',
         };
-
-        const buttonSettings = Object.assign({}, defaults, settings);
 
         button.className = 'url-copy-button';
         button.title = buttonSettings.title;
@@ -117,22 +170,13 @@ ${code.split('\n').map(line => '    ' + line).join('\n')}
       }
     }
   });
-}
+});
 
 /**
  * Adds iframes below code blocks to display Marimo notebooks inline
- * @param {string[]} elements - CSS selectors for elements to add iframes to. Default: ['pre', 'div.highlight']
- * @param {Object} settings - Iframe customization options
- * @param {string} [settings.height='400px'] - Height of the iframe
- * @param {string} [settings.width='100%'] - Width of the iframe
- * @param {string} [settings.border='1px solid #ddd'] - Border style of the iframe
- * @param {string} [settings.borderRadius='4px'] - Corner radius of the iframe
- * @param {string} [settings.margin='1rem 0'] - Margin around the iframe
- * @param {string} [settings.url='https://marimo.app'] - Base URL for the Marimo instance
- * @param {string} [settings.paramName='code'] - Query parameter name for the code
  */
-function addMarimoIframes(elements = ['pre', 'div.highlight'], settings = {}) {
-  const preElements = document.querySelectorAll(elements);
+document.addEventListener("DOMContentLoaded", function() {
+  const preElements = document.querySelectorAll(iframeSettings.elements);
   preElements.forEach(preElement => {
     // Check if there's a special comment before this pre element
     let node = preElement.previousSibling;
@@ -176,8 +220,6 @@ ${code.split('\n').map(line => '    ' + line).join('\n')}
           paramName: 'code'
         };
 
-        const iframeSettings = Object.assign({}, defaults, settings);
-
         // Create the iframe
         const iframe = document.createElement('iframe');
         iframe.style.height = iframeSettings.height;
@@ -185,17 +227,17 @@ ${code.split('\n').map(line => '    ' + line).join('\n')}
         iframe.style.border = iframeSettings.border;
         iframe.style.borderRadius = iframeSettings.borderRadius;
         iframe.style.margin = iframeSettings.margin;
-        
+
         // Encode the code and create the URL
         const encodedCode = encodeURIComponent(code);
-        const url = `${iframeSettings.url}?${iframeSettings.paramName}=${encodedCode}`;
-        
+        const url = `${iframeSettings.url}?${iframeSettings.paramName}=${encodedCode}&embed=true&show-chrome=false`;
+
         // Set the iframe source
         iframe.src = url;
-        
+
         // Insert the iframe after the code block
         preElement.parentNode.insertBefore(iframe, preElement.nextSibling);
       }
     }
   });
-}
+});

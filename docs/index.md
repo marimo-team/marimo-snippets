@@ -26,10 +26,10 @@ def hello_world():
 hello_world()
 ```
 
-<script src="extractor.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        addMarimoButtons();
-        addMarimoIframes();
-});
+<!-- Optionally configure how buttons and iframes are rendered. -->
+<!-- Configuration must come _before_ the main extractor script is loaded. -->
+<script type="text/x-codesend-config">
+configureMarimoButtons({title: "Open in a marimo notebook"});
+configureMarimoIframes({height: "400px"});
 </script>
+<script src="extractor.js"></script>
