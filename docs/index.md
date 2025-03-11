@@ -8,7 +8,7 @@ a = 1
 b = 2
 ```
 
-<!-- url-copy: https://marimo.app param-name: code -->
+<!-- add-marimo-button -->
 ```python
 def hello_world():
     print("Hello, World!")
@@ -16,5 +16,19 @@ def hello_world():
 hello_world()
 ```
 
-<script src="extractor.js"></script>
+We might also do something fancy that makes it easy to inline stuff. 
 
+<!-- add-marimo-iframe -->
+```python
+def hello_world():
+    print("Hello, World! from an iframe!")
+
+hello_world()
+```
+
+<script src="extractor.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        addMarimoButtons();
+    });
+</script>
