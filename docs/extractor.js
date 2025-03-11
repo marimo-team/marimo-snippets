@@ -11,7 +11,7 @@ let buttonSettings = {
   cursor: 'pointer',
   zIndex: '10',
   filter: 'grayscale(100%)',
-  icon: '<img src="icon.svg" alt="icon" width="20" height="20">',
+  icon: '<img src="https://cms.marimo.io/icons/favicon.svg" alt="icon" width="20" height="20">',
 };
 
 let iframeSettings = {
@@ -41,7 +41,7 @@ let iframeSettings = {
  * @param {string} [settings.cursor='pointer'] - Mouse cursor style on hover
  * @param {string} [settings.zIndex='10'] - Button stacking order
  * @param {string} [settings.filter='grayscale(100%)'] - Default filter applied to button
- * @param {string} [settings.icon='<img src="icon.svg" alt="icon" width="20" height="20">'] - HTML content for the button
+ * @param {string} [settings.icon='<img src="https://cms.marimo.io/icons/favicon.svg" alt="icon" width="20" height="20">'] - HTML content for the button
  */
 function configureMarimoButtons(settings = {}) {
   buttonSettings = { ...buttonSettings, ...settings };
@@ -98,21 +98,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // Create the button
         console.log("Making a button")
         const button = document.createElement('button');
-        const defaults = {
-          title: 'Open code in an interactive playground',
-          position: 'absolute',
-          top: '0.5rem',
-          right: '0.5rem',
-          border: 'none',
-          borderRadius: '4px',
-          padding: '4px 8px',
-          margin: '-4px 22px',
-          cursor: 'pointer',
-          zIndex: '10',
-          filter: 'grayscale(100%)',
-          icon: '<img src="icon.svg" alt="icon" width="20" height="20">',
-        };
-
         button.className = 'url-copy-button';
         button.title = buttonSettings.title;
         button.style.position = buttonSettings.position;
@@ -209,17 +194,6 @@ app = marimo.App()
 def _():
 ${code.split('\n').map(line => '    ' + line).join('\n')}
 `;
-        // Create default settings
-        const defaults = {
-          height: '400px',
-          width: '100%',
-          border: '1px solid #ddd',
-          borderRadius: '4px',
-          margin: '1rem 0',
-          url: 'https://marimo.app',
-          paramName: 'code'
-        };
-
         // Create the iframe
         const iframe = document.createElement('iframe');
         iframe.style.height = iframeSettings.height;
