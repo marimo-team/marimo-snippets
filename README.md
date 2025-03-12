@@ -71,7 +71,14 @@ slider.value * "🍃"
 <script src="extractor.js"></script>
 ````
 
+> [!NOTE]  
+> You might wonder why we wrap the `<marimo-button>` element with an extra
+> `<div>`. This is related to how different markdown preprocessors might handle
+> the custom HTML elements. To guarantee that this approach works across most
+> markdown tools, we need to wrap the custom elements in a block element.
+
 ## Overview
+
 
 marimo snippets lets you selectively convert code snippets, specifically
 `<pre>` elements, to marimo notebooks.
@@ -129,8 +136,6 @@ def hello_world():
 </div>
 ````
 
-> [!NOTE]  
-> You might wonder why we wrap the `<marimo-button>` element with an extra `<div>`. This is related to how different markdown preprocessors might handle the custom HTML elements. To guarantee that this approach works across all markdown tools out there we need to wrap the custom elements in a block element. That's simply the least brittle approach.
 
 ### Using markdown
 
