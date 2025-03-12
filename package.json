@@ -1,0 +1,9 @@
+{
+  "name": "marimo-snippets",
+  "version": "1.0.0",
+  "description": "Embed interactive Python notebooks in static web pages, powered by marimo and WebAssembly.",
+  "main": "src/extractor.js",
+  "keywords": ["Python", "docs", "notebook", "WebAssembly"],
+  "author": "marimo-team",
+  "license": "MIT",
+}
