@@ -33,7 +33,7 @@ def hello_world():
 
 ### Embed in an inline interactive notebook
 
-````
+````md
 This replaces the python code with an inline marimo notebook.
 <div>
 <marimo-iframe>
