@@ -10,6 +10,7 @@ b = 2
 
 <div>
 <marimo-button>
+
 ```python
 def hello_world():
     print("Hello, World!")
@@ -23,6 +24,7 @@ It's also possible to replace a code block with an inlined notebook.
 
 <div>
 <marimo-iframe>
+
 ```python
 def hello_world():
     print("Hello, World! from an iframe!")
@@ -36,6 +38,7 @@ Multiple code blocks will be replaced with an entire notebook.
 
 <div>
 <marimo-iframe>
+
 ```python
 import marimo as mo
 ```
