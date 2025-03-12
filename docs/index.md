@@ -8,23 +8,48 @@ a = 1
 b = 2
 ```
 
-<!-- add-marimo-button -->
+<div>
+<marimo-button>
 ```python
 def hello_world():
     print("Hello, World!")
 
 hello_world()
 ```
+</marimo-button>
+</div>
 
-We might also do something fancy that makes it easy to inline stuff. 
+It's also possible to replace a code block with an inlined notebook.
 
-<!-- add-marimo-iframe -->
+<div>
+<marimo-iframe>
 ```python
 def hello_world():
     print("Hello, World! from an iframe!")
 
 hello_world()
 ```
+</marimo-iframe>
+</div>
+
+Multiple code blocks will be replaced with an entire notebook.
+
+<div>
+<marimo-iframe>
+```python
+import marimo as mo
+```
+
+```python
+slider = mo.ui.slider(1, 10)
+slider
+```
+
+```python
+slider.value * "🍃"
+```
+</marimo-iframe>
+</div>
 
 <!-- Optionally configure how buttons and iframes are rendered. -->
 <!-- Configuration must come _before_ the main extractor script is loaded. -->

@@ -2,12 +2,14 @@
 
 > JS snippet to send codeblock contents as a query string
 
+🚧 **Under construction!**
+
 ## Usage 
 
-This approach expects an HTML comment above a codeblock to work.
 
-Here is one example: 
+Wrap elements in custom HTML elements to render them as marimo notebooks.
 
+### Open in an new tab
 ````md
 This is a demo site.
 
@@ -16,22 +18,54 @@ a = 1
 b = 2
 ```
 
-<!-- url-copy: https://marimo.app param-name: code -->
+This adds a button that links to a marimo playground notebook preloaded
+with Python code.
+
+<div>
+<marimo-button>
 ```python
 def hello_world():
     print("Hello, World!")
 ```
+</marimo-button>
+</div>
+````
+
+### Embed in an inline interactive notebook
+
+````md
+This replaces the python code with an inline marimo notebook.
+<div>
+<marimo-iframe>
+```python
+def hello_world():
+    print("Hello, World!")
+```
+</marimo-iframe>
+</div>
+
+Multiple code blocks will be replaced with an entire notebook.
+
+<div>
+<marimo-iframe>
+```python
+import marimo as mo
+```
+```python
+slider = mo.ui.slider(1, 10)
+slider
+```
+
+```python
+slider.value * "🍃"
+```
+</marimo-iframe>
+</div>
 
 <script src="extractor.js"></script>
 ````
 
-<!-- url-copy: https://marimo.app param-name: code -->
-```python
-def hello_world():
-    print("Hello, World!")
-```
-
-Notice how the first codeblock does not have a comment but the second one does? The second codeblock will get an extra button added to it that will send the code to the specified URL as a query string.
+### Try locally
 
 To run this locally, you only need mkdocs. 
 
