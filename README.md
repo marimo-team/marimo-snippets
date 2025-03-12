@@ -210,7 +210,7 @@ snippets script.
 ```
 <!-- Optionally configure how buttons and iframes are rendered. -->
 <!-- Configuration must come _before_ the main extractor script is loaded. -->
-<script type="text/x-codesend-config">
+<script type="text/x-marimo-snippets-config">
 configureMarimoButtons({title: "Open in a marimo notebook"});
 configureMarimoIframes({height: "400px"});
 </script>

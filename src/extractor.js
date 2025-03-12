@@ -141,7 +141,7 @@ function createButton(codeElement, config = buttonSettings) {
  * This uses any data attributes on <marimo-button> to override defaults.
  */
 document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll('script[type="text/x-codesend-config"]').forEach(script => {
+  document.querySelectorAll('script[type="text/x-marimo-snippets-config"]').forEach(script => {
     eval(script.textContent);
   });
 
