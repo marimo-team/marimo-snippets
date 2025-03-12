@@ -12,6 +12,8 @@ let buttonSettings = {
   zIndex: '10',
   filter: 'grayscale(100%)',
   icon: '<img src="https://cms.marimo.io/icons/favicon.svg" alt="icon" width="20" height="20">',
+  url: 'https://marimo.app',
+  paramName: 'code'
 };
 
 let iframeSettings = {
@@ -27,6 +29,23 @@ let iframeSettings = {
 
 /**
  * Configure interactive buttons for code blocks that open the code in a Marimo playground
+ *
+ * @param {Object} settings - Button customization options
+ * @param {string[]} [settings.elements=['pre', 'div.highlight'] - CSS selectors for elements to add buttons to. Default: ['pre', 'div.highlight']
+ * @param {string} [settings.title='Open code in an interactive playground'] - Button tooltip text
+ * @param {string} [settings.position='absolute'] - CSS position property
+ * @param {string} [settings.top='0.5rem'] - Distance from top of container
+ * @param {string} [settings.right='0.5rem'] - Distance from right of container
+ * @param {string} [settings.border='none'] - Button border style
+ * @param {string} [settings.borderRadius='4px'] - Button corner radius
+ * @param {string} [settings.padding='4px 8px'] - Button padding
+ * @param {string} [settings.margin='-4px 22px'] - Button margin
+ * @param {string} [settings.cursor='pointer'] - Mouse cursor style on hover
+ * @param {string} [settings.zIndex='10'] - Button stacking order
+ * @param {string} [settings.filter='grayscale(100%)'] - Default filter applied to button
+ * @param {string} [settings.icon='<img src="https://cms.marimo.io/icons/favicon.svg" alt="icon" width="20" height="20">'] - HTML content for the button
+ * @param {string} [settings.url='https://marimo.app'] - Base URL for the Marimo instance
+ * @param {string} [settings.paramName='code'] - Query parameter name for the code
  */
 function configureMarimoButtons(settings = {}) {
   buttonSettings = { ...buttonSettings, ...settings };
@@ -34,6 +53,16 @@ function configureMarimoButtons(settings = {}) {
 
 /**
  * Configure marimo iframes
+ *
+ * @param {Object} settings - Iframe customization options
+ * @param {string[]} [settings.elements=['pre', 'div.highlight'] - CSS selectors for elements to add buttons to. Default: ['pre', 'div.highlight']
+ * @param {string} [settings.height='400px'] - Height of the iframe
+ * @param {string} [settings.width='100%'] - Width of the iframe
+ * @param {string} [settings.border='1px solid #ddd'] - Border style of the iframe
+ * @param {string} [settings.borderRadius='4px'] - Corner radius of the iframe
+ * @param {string} [settings.margin='1rem 0'] - Margin around the iframe
+ * @param {string} [settings.url='https://marimo.app'] - Base URL for the Marimo instance
+ * @param {string} [settings.paramName='code'] - Query parameter name for the code
  */
 function configureMarimoIframes(settings = {}) {
   iframeSettings = { ...iframeSettings, ...settings };
