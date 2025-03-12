@@ -1,5 +1,5 @@
 let buttonSettings = {
-  elements: ['pre', 'div.highlight'],
+  elements: ['pre'],
   title: 'Open code in an interactive playground',
   position: 'absolute',
   top: '0.5rem',
@@ -15,7 +15,7 @@ let buttonSettings = {
 };
 
 let iframeSettings = {
-  elements: ['pre', 'div.highlight'],
+  elements: ['pre'],
   height: '400px',
   width: '100%',
   border: '1px solid #ddd',
@@ -63,6 +63,56 @@ function configureMarimoIframes(settings = {}) {
 };
 
 
+function generateCell(code) {
+  return `@app.cell
+def _():
+${code.split('\n').map(line => '    ' + line).join('\n')}
+`;
+}
+
+function generateNotebook(cells) {
+  return `import marimo
+
+app = marimo.App()
+
+${cells}
+`;
+}
+
+function createButton(codeElement) {
+  const button = document.createElement('button');
+  button.className = 'url-copy-button';
+  button.title = buttonSettings.title;
+  button.style.position = buttonSettings.position;
+  button.style.top = buttonSettings.top;
+  button.style.right = buttonSettings.right;
+  button.style.border = buttonSettings.border;
+  button.style.borderRadius = buttonSettings.borderRadius;
+  button.style.padding = buttonSettings.padding;
+  button.style.margin = buttonSettings.margin;
+  button.style.cursor = buttonSettings.cursor;
+  button.style.zIndex = buttonSettings.zIndex;
+  button.style.filter = buttonSettings.filter;
+  button.innerHTML = buttonSettings.icon;
+
+  button.addEventListener("mouseover", function() { button.style.filter = "grayscale(0%)"; });
+  button.addEventListener("mouseout", function() { button.style.filter = 'grayscale(100%)'; });
+  button.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const code = generateNotebook(generateCell(codeElement.textContent));
+    const encodedCode = encodeURIComponent(code);
+    let settings = {
+      url: "https://marimo.app",
+      paramName: 'code'
+    };
+    const url = `${settings.url}?${settings.paramName}=${encodedCode}`;
+    window.open(url, '_blank');
+  });
+
+  return button;
+}
+
 /**
  * Adds interactive buttons to code blocks that open the code in a Marimo playground
  */
@@ -71,147 +121,47 @@ document.addEventListener("DOMContentLoaded", function() {
     eval(script.textContent);
   });
 
-  const preElements = document.querySelectorAll(buttonSettings.elements);
-  preElements.forEach(preElement => {
-    // Check if there's a special comment before this pre element
-    let node = preElement.previousSibling;
-    let foundConfig = false;
-
-    // Look for HTML comments before the pre element
-    while (node && !foundConfig) {
-      if (node.nodeType === Node.COMMENT_NODE) {
-        const commentText = node.textContent.trim();
-        // Only set foundConfig to true if we explicitly find the add-marimo-button comment
-        // Stop looking at other comments if we find any comment
-        if (commentText.startsWith('add-marimo-button')) {
-          foundConfig = true;
-        }
-        break;  // Exit after finding any comment
-      }
-      node = node.previousSibling;
+  const buttons = document.querySelectorAll('marimo-button');
+  buttons.forEach(button => {
+    const preElement = button.querySelector(buttonSettings.elements.join(","));
+    if (!preElement) {
+      return;
     }
-
-    // If we found a config comment, add the button
-    if (foundConfig) {
-      const codeElement = preElement.querySelector('code');
-      if (codeElement) {
-        // Create the button
-        console.log("Making a button")
-        const button = document.createElement('button');
-        button.className = 'url-copy-button';
-        button.title = buttonSettings.title;
-        button.style.position = buttonSettings.position;
-        button.style.top = buttonSettings.top;
-        button.style.right = buttonSettings.right;
-        button.style.border = buttonSettings.border;
-        button.style.borderRadius = buttonSettings.borderRadius;
-        button.style.padding = buttonSettings.padding;
-        button.style.margin = buttonSettings.margin;
-        button.style.cursor = buttonSettings.cursor;
-        button.style.zIndex = buttonSettings.zIndex;
-        button.style.filter = buttonSettings.filter;
-        button.innerHTML = buttonSettings.icon;
-        // Ensure the pre element has a relative position for button placement
-        if (getComputedStyle(preElement).position === 'static') {
-          preElement.style.position = 'relative';
-        }
-
-        button.addEventListener("mouseover", function() { button.style.filter = "grayscale(0%)"; });
-        button.addEventListener("mouseout", function() { button.style.filter = 'grayscale(100%)'; });
-
-        // Add click event to the button
-        button.addEventListener('click', function(e) {
-          e.preventDefault();
-
-          // Get the code text
-          let code = codeElement.textContent;
-          // Wrap the code block in marimo notebook boilerplate
-          code = `import marimo
-
-app = marimo.App()
-
-@app.cell
-def _():
-${code.split('\n').map(line => '    ' + line).join('\n')}
-`;
-
-          // Encode the code for use in a URL
-          const encodedCode = encodeURIComponent(code);
-
-          // Create the URL with the code as a query param
-          let settings = {
-            url: "https://marimo.app",
-            paramName: 'code'
-          };
-          const url = `${settings.url}?${settings.paramName}=${encodedCode}`;
-          console.log(url)
-
-          // Open the URL in a new tab
-          window.open(url, '_blank');
-        });
-
-        // Add the button to the pre element
-        preElement.appendChild(button);
-      }
+    // Ensure the pre element has a relative position for button placement
+    if (getComputedStyle(preElement).position === 'static') {
+      preElement.style.position = 'relative';
     }
+    preElement.appendChild(createButton(preElement));
   });
 });
 
 /**
- * Adds iframes below code blocks to display Marimo notebooks inline
+ * Replaces code blocks with inline marimo notebooks
  */
 document.addEventListener("DOMContentLoaded", function() {
-  const preElements = document.querySelectorAll(iframeSettings.elements);
-  preElements.forEach(preElement => {
-    // Check if there's a special comment before this pre element
-    let node = preElement.previousSibling;
-    let foundConfig = false;
-
-    // Look for HTML comments before the pre element
-    while (node && !foundConfig) {
-      if (node.nodeType === Node.COMMENT_NODE) {
-        const commentText = node.textContent.trim();
-        // Only proceed if we explicitly find the add-marimo-iframe comment
-        if (commentText.startsWith('add-marimo-iframe')) {
-          foundConfig = true;
-        }
-        break;  // Exit after finding any comment
-      }
-      node = node.previousSibling;
+  const marimoFrames = document.querySelectorAll("marimo-iframe");
+  marimoFrames.forEach(marimoFrame => {
+    const preElements = marimoFrame.querySelectorAll(iframeSettings.elements);
+    if (preElements.length == 0) {
+      return;
     }
 
-    // If we found a config comment, add the iframe
-    if (foundConfig) {
-      const codeElement = preElement.querySelector('code');
-      if (codeElement) {
-        // Get the code text and prepare it
-        let code = codeElement.textContent;
-        code = `import marimo
+    const cells = Array.from(preElements).map((element) => {
+      return generateCell(element.textContent);
+    })
 
-app = marimo.App()
+    const code = generateNotebook(cells.join("\n"));
 
-@app.cell
-def _():
-${code.split('\n').map(line => '    ' + line).join('\n')}
-`;
-        // Create the iframe
-        const iframe = document.createElement('iframe');
-        iframe.style.height = iframeSettings.height;
-        iframe.style.width = iframeSettings.width;
-        iframe.style.border = iframeSettings.border;
-        iframe.style.borderRadius = iframeSettings.borderRadius;
-        iframe.style.margin = iframeSettings.margin;
+    const iframe = document.createElement('iframe');
+    iframe.style.height = iframeSettings.height;
+    iframe.style.width = iframeSettings.width;
+    iframe.style.border = iframeSettings.border;
+    iframe.style.borderRadius = iframeSettings.borderRadius;
+    iframe.style.margin = iframeSettings.margin;
 
-        // Encode the code and create the URL
-        const encodedCode = encodeURIComponent(code);
-        const url = `${iframeSettings.url}?${iframeSettings.paramName}=${encodedCode}&embed=true&show-chrome=false`;
-
-        // Set the iframe source
-        iframe.src = url;
-
-        // Insert the iframe after the code block
-        preElement.parentNode.insertBefore(iframe, preElement.nextSibling);
-      }
-    }
+    const encodedCode = encodeURIComponent(code);
+    const url = `${iframeSettings.url}?${iframeSettings.paramName}=${encodedCode}&embed=true&show-chrome=false`;
+    iframe.src = url;
+    marimoFrame.replaceWith(iframe);
   });
 });
