@@ -145,16 +145,12 @@ document.addEventListener("DOMContentLoaded", function() {
     if (preElements.length == 0) {
       return;
     }
-    console.log(preElements);
 
     const cells = Array.from(preElements).map((element) => {
       return generateCell(element.textContent);
     })
 
-    console.log("cells")
-    console.log(cells);
     const code = generateNotebook(cells.join("\n"));
-    console.log(code);
 
     const iframe = document.createElement('iframe');
     iframe.style.height = iframeSettings.height;
