@@ -10,6 +10,7 @@
 Wrap elements in custom HTML elements to render them as marimo notebooks.
 
 ### Open in an new tab
+
 ````md
 This is a demo site.
 
@@ -30,6 +31,10 @@ def hello_world():
 </marimo-button>
 </div>
 ````
+
+> [!NOTE]  
+> You might wonder why we wrap the `<marimo-button>` element with an extra `<div>`. This is related to how different markdown preprocessors might handle the custom HTML elements. To guarantee that this approach works across all markdown tools out there we need to wrap the custom elements in a block element. That's simply the least brittle approach.
+
 
 ### Embed in an inline interactive notebook
 
