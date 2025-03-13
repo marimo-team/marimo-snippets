@@ -30,6 +30,7 @@ try locally; [install `uv`](https://docs.astral.sh/uv/), then run
 uv run --with mkdocs-material mkdocs serve
 ```
 
+
 **Link to a playground notebook.** Use the `<marimo-button>` HTML element to
 add a button that links to a marimo playground notebook, preloaded with Python
 code.
@@ -44,7 +45,7 @@ def hello_world():
 </marimo-button>
 <div>
 
-<script src="extractor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1.0.0/src/extractor.js"></script>
 ````
 
 
@@ -68,7 +69,7 @@ slider.value * "🍃"
 </marimo-iframe>
 </div>
 
-<script src="extractor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1.0.0/src/extractor.js"></script>
 ````
 
 > [!NOTE]  
@@ -94,7 +95,7 @@ for a list of supported packages.
 To get started, you'll need to load the marimo snippets script:
 
 ```html
-<script src="extractor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1.0.0/src/extractor.js"></script>
 ```
 
 ### Linking to the marimo playground
@@ -215,7 +216,7 @@ configureMarimoButtons({title: "Open in a marimo notebook"});
 configureMarimoIframes({height: "400px"});
 </script>
 
-<script src="extractor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1.0.0/src/extractor.js"></script>
 ```
 
 ### Per-element configuration
