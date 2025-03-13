@@ -23,7 +23,6 @@ pages.
 
 ## Quickstart for mkdocs users
 
-https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@latest/dist/index.js
 **Try locally.** This repo contains an example (`src/index.md`) that you can
 try locally; [install `uv`](https://docs.astral.sh/uv/), then run
 
