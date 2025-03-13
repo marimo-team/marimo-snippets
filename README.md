@@ -85,8 +85,9 @@ marimo snippets lets you selectively convert code snippets, specifically
 `<pre>` elements, to marimo notebooks.
 
 These notebooks run via **WebAssembly**, meaning the browser executes Python
-code (no backend required). Most but not all packages are supported; consult
-the [pyodide
+code (no backend required). Most packages are supported, including numpy,
+scipy, scikit-learn, matplotlib, plotly, altair, polars, duckdb, and more.
+Consult the [pyodide
 documentation](https://pyodide.org/en/stable/usage/packages-in-pyodide.html)
 for a list of supported packages.
 
@@ -208,7 +209,7 @@ Default iframe configuration:
 To configure snippets globally, include the following script element _before_ loading the marimo
 snippets script.
 
-```
+```html
 <!-- Optionally configure how buttons and iframes are rendered. -->
 <!-- Configuration must come _before_ the main extractor script is loaded. -->
 <script type="text/x-marimo-snippets-config">

@@ -6,17 +6,17 @@ with mkdocs.
 marimo snippets lets you selectively render Python code snippets as notebooks,
 or add buttons to snippets that link out to notebooks.
 
+These snippets run via **WebAssembly**, meaning the browser executes Python
+code (no backend required). Most packages are supported, including numpy,
+scipy, scikit-learn, matplotlib, plotly, altair, polars, duckdb, and more.
+Consult the [pyodide documentation](https://pyodide.org/en/stable/usage/packages-in-pyodide.html)
+for a full list.
+
 ## Initialize marimo snippets
 
 Include the following to load marimo snippets on your web page:
 
 ```html
-<!-- Optionally configure how buttons and iframes are rendered. -->
-<!-- Configuration must come _before_ the main extractor script is loaded. -->
-<script type="text/x-marimo-snippets-config">
-configureMarimoButtons({title: "Open in a marimo notebook"});
-configureMarimoIframes({height: "400px"});
-</script>
 <script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1"></script>
 ```
 
