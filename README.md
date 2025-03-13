@@ -191,7 +191,7 @@ Default button configuration:
 Default iframe configuration:
 
 ```javascript
-iframeSettings = {
+{
   elements: ['pre'],
   height: '400px',
   width: '100%',
