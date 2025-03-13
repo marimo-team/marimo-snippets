@@ -1,4 +1,4 @@
-site_name: copy feature demo
+site_name: marimo snippets with mkdocs
 theme:
   name: material
   features:
@@ -11,3 +11,4 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+docs_dir: src
