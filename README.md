@@ -23,7 +23,7 @@ pages.
 
 ## Quickstart for mkdocs users
 
-**Try locally.** This repo contains an example (`docs/index.md`) that you can
+**Try locally.** This repo contains an example (`src/index.md`) that you can
 try locally; [install `uv`](https://docs.astral.sh/uv/), then run
 
 ```bash
