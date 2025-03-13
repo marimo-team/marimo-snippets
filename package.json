@@ -1,6 +1,9 @@
 {
   "name": "@marimo-team/marimo-snippets",
   "version": "1.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Embed interactive Python notebooks in static web pages, powered by marimo and WebAssembly.",
   "repository": {
     "type": "git",
