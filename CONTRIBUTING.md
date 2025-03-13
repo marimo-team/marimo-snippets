@@ -19,6 +19,18 @@ However, if you want to contribute to this repo, here's our process.
 3. Commit your changes using conventional commits
 4. Push to your fork and submit a pull request
 
+## Testing changes locally
+
+You can the document `src/index.md` to test locally,
+with
+
+```bash
+uv run --with mkdocs-material mkdocs serve
+```
+
+You can change the script tag to point to `extractor.js` (instead of jsdelivr)
+when working locally, but make sure to change it back before pushing up.
+
 ## Pull Request Guidelines
 
 - Include tests for any new functionality

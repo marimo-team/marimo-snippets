@@ -17,7 +17,7 @@ Include the following to load marimo snippets on your web page:
 configureMarimoButtons({title: "Open in a marimo notebook"});
 configureMarimoIframes({height: "400px"});
 </script>
-<script src="extractor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1.0.0/src/extractor.js"></script>
 ```
 
 ## Linking to notebooks
@@ -129,4 +129,4 @@ slider.value * "🍃"
 configureMarimoButtons({title: "Open in a marimo notebook"});
 configureMarimoIframes({height: "400px"});
 </script>
-<script src="extractor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1.0.0/src/extractor.js"></script>
