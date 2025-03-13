@@ -1,4 +1,4 @@
-# Contributing to @marimo-team/marimo-blocks
+# Contributing to @marimo-team/marimo-snippets
 
 Thanks for your interest in contributing!
 
