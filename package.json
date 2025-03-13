@@ -1,6 +1,6 @@
 {
   "name": "@marimo-team/marimo-snippets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "files": [
     "src/exctractor.js"
   ],
