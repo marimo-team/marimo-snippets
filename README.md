@@ -52,7 +52,7 @@ def hello_world():
 
 This is what it looks like:
 
-![](img/button.png)
+![button preview](img/button.png)
 
 ### **Embed an interactive notebook inline.** 
 
@@ -78,6 +78,10 @@ slider.value * "🍃"
 
 <script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1"></script>
 ````
+
+This will embed an iframe with an interactive slider. 
+
+![iframe preview](img/iframe.png)
 
 > [!NOTE]  
 > You might wonder why we wrap the `<marimo-button>` element with an extra
