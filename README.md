@@ -81,7 +81,7 @@ slider.value * "🍃"
 
 This will embed an iframe with an interactive slider. 
 
-![iframe preview](img/iframe.png)
+![iframe preview](img/slider.gif)
 
 > [!NOTE]  
 > You might wonder why we wrap the `<marimo-button>` element with an extra
