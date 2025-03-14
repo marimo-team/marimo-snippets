@@ -138,6 +138,7 @@ def hello_world():
 </div>
 ````
 
+![](img/button.png)
 
 ### Using markdown
 
