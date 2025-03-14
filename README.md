@@ -31,7 +31,9 @@ uv run --with mkdocs-material mkdocs serve
 ```
 
 
-**Link to a playground notebook.** Use the `<marimo-button>` HTML element to
+### **Link to a playground notebook.** 
+
+Use the `<marimo-button>` HTML element to
 add a button that links to a marimo playground notebook, preloaded with Python
 code.
 
@@ -48,8 +50,13 @@ def hello_world():
 <script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1"></script>
 ````
 
+This is what it looks like:
 
-**Embed an interactive notebook inline.** `<marimo-iframe>` replaces
+![](img/button.png)
+
+### **Embed an interactive notebook inline.** 
+
+`<marimo-iframe>` replaces
 multiple code snippets with an inline marimo notebook, one cell per code
 snippet.
 
@@ -137,8 +144,6 @@ def hello_world():
 </marimo-button>
 </div>
 ````
-
-![](img/button.png)
 
 ### Using markdown
 
