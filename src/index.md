@@ -37,7 +37,7 @@ hello_world()
 </div>
 ````
 
-renders as
+The result of this snippet is shown below.
 
 <div>
 <marimo-button>
@@ -68,7 +68,7 @@ hello_world()
 </div>
 ````
 
-renders as
+The result of this snippet is shown below.
 
 <div>
 <marimo-iframe>
@@ -81,7 +81,9 @@ hello_world()
 </marimo-iframe>
 </div>
 
-Multiple code blocks will be replaced with an entire notebook:
+### Merging code blocks
+
+Multiple code blocks can be merged together to form a single notebook:
 
 ````md
 <div>
@@ -103,7 +105,7 @@ slider.value * "🍃"
 </div>
 ````
 
-renders as
+The result of this snippet is shown below.
 
 <div>
 <marimo-iframe data-height="600px">
