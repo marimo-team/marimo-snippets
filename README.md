@@ -61,6 +61,7 @@ multiple code snippets with an inline marimo notebook, one cell per code
 snippet.
 
 ````md
+<div>
 <marimo-iframe>
 ```python
 import marimo as mo
