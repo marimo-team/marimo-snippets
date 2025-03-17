@@ -23,6 +23,7 @@ let iframeSettings = {
   border: '1px solid #ddd',
   borderRadius: '4px',
   margin: '1rem 0',
+  showCode: 'true',
   url: 'https://marimo.app',
   paramName: 'code'
 };
@@ -61,6 +62,7 @@ function configureMarimoButtons(settings = {}) {
  * @param {string} [settings.border='1px solid #ddd'] - Border style of the iframe
  * @param {string} [settings.borderRadius='4px'] - Corner radius of the iframe
  * @param {string} [settings.margin='1rem 0'] - Margin around the iframe
+ * @param {string} [settings.showCode='true'] - Whether to show the notebook's code
  * @param {string} [settings.url='https://marimo.app'] - Base URL for the Marimo instance
  * @param {string} [settings.paramName='code'] - Query parameter name for the code
  */
@@ -93,6 +95,7 @@ ${cells}
 function overrideSettingsWithDataAttributes(element, settings) {
   const config = { ...settings };
   for (const key in element.dataset) {
+    console.log(key);
     let value = element.dataset[key];
     // If key is "elements", assume a comma-separated list.
     if (key.toLowerCase() === "elements") {
@@ -189,9 +192,9 @@ document.addEventListener("DOMContentLoaded", function() {
     iframe.style.margin = iframeConfig.margin;
 
     const encodedCode = encodeURIComponent(code);
-    const url = `${iframeConfig.url}?${iframeConfig.paramName}=${encodedCode}&embed=true&show-chrome=false`;
+    const mode = iframeConfig.showCode === 'false' ? 'read' : 'edit';
+    const url = `${iframeConfig.url}?${iframeConfig.paramName}=${encodedCode}&embed=true&show-chrome=false&mode=${mode}&show-code=${iframeConfig.showCode}`;
     iframe.src = url;
     marimoFrame.replaceWith(iframe);
   });
 });
-
