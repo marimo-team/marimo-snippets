@@ -210,6 +210,7 @@ Default iframe configuration:
   border: '1px solid #ddd',
   borderRadius: '4px',
   margin: '1rem 0',
+  showCode: 'true',
   url: 'https://marimo.app',
   paramName: 'code'
 };
@@ -236,7 +237,7 @@ configureMarimoIframes({height: "400px"});
 To configure an a per-element basis, use data attributes:
 
 ```html
-<marimo-iframe data-height="600px">
+<marimo-iframe data-height="600px" data-show-code="false">
 ...
 </marimo-iframe>
 ```
