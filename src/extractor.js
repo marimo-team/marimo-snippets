@@ -95,7 +95,6 @@ ${cells}
 function overrideSettingsWithDataAttributes(element, settings) {
   const config = { ...settings };
   for (const key in element.dataset) {
-    console.log(key);
     let value = element.dataset[key];
     // If key is "elements", assume a comma-separated list.
     if (key.toLowerCase() === "elements") {
