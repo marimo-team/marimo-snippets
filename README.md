@@ -178,7 +178,7 @@ Sphinx** that target marimo snippets.
 * If you develop a plugin, let us know and we'll link to it from our README.
 * If you have questions while developing a plugin, reach out on GitHub issues.
 
-marimo snippets is implemented as a wrapper around marimo's online playground;
+marimo snippets is implemented as a wrapper around marimo's online playground.
 In some cases, when building plugins for SSGs, you may be better served by generating
 working with playground URLs directly, instead of using marimo-snippets. Consult
 the marimo [docs on embedding playground
