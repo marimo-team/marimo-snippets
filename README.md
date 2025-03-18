@@ -164,6 +164,12 @@ many static site generators like mkdocs. However, marimo snippets does not work
 out of the box with all SSGs; for example, it does not work out of the box with
 Sphinx.
 
+### MDX
+
+marimo-snippets does not play well with MDX out of the box. To embed marimo
+notebooks in MDX, see the [marimo
+documentation](https://docs.marimo.io/guides/publishing/playground/#mdx).
+
 ### Contributing
 
 To our community: **we'd love your help in developing plugins for other SSGs like
@@ -171,6 +177,13 @@ Sphinx** that target marimo snippets.
 
 * If you develop a plugin, let us know and we'll link to it from our README.
 * If you have questions while developing a plugin, reach out on GitHub issues.
+
+marimo snippets is implemented as a wrapper around marimo's online playground.
+In some cases, when building plugins for SSGs, you may be better served by generating
+working with playground URLs directly, instead of using marimo-snippets. Consult
+the marimo [docs on embedding playground
+notebooks](https://docs.marimo.io/guides/publishing/playground/#embedding-in-other-web-pages)
+to learn more.
 
 ## Configuration
 
