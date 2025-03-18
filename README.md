@@ -47,7 +47,7 @@ def hello_world():
 </marimo-button>
 <div>
 
-<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1"></script>
 ````
 
 This is what it looks like:
@@ -77,7 +77,7 @@ slider.value * "🍃"
 </marimo-iframe>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1"></script>
 ````
 
 This will embed an iframe with an interactive slider. 
@@ -229,7 +229,7 @@ configureMarimoButtons({title: "Open in a marimo notebook"});
 configureMarimoIframes({height: "400px"});
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1"></script>
 ```
 
 ### Per-element configuration
