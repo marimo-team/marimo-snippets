@@ -25,7 +25,7 @@ slider.value * "🍃"
 </div>
 
 <script>
-    let buttonSettings = {
+let buttonSettings = {
   elements: ['pre'],
   title: 'Open code in an interactive playground',
   position: 'absolute',
