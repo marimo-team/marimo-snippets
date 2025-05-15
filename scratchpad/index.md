@@ -1,4 +1,31 @@
-let buttonSettings = {
+<div>
+<marimo-iframe>
+
+```md
+# hello there
+```
+
+```python
+import marimo as mo
+```
+
+```md
+This is something that totally does not get ignored for real
+```
+
+```python
+slider = mo.ui.slider(1, 10)
+slider
+```
+
+```python
+slider.value * "🍃"
+```
+</marimo-iframe>
+</div>
+
+<script>
+    let buttonSettings = {
   elements: ['pre'],
   title: 'Open code in an interactive playground',
   position: 'absolute',
@@ -72,20 +99,20 @@ function configureMarimoIframes(settings = {}) {
 
 function generateCell(code, classNames) {
   const language = classNames.find(className => className.startsWith('language-'));
-  if (language === 'language-python') {
+  if (language === 'language-python'){
     return `@app.cell
 def _():
 ${code.split('\n').map(line => '    ' + line).join('\n')}
 `;
-  }
-  if (language === 'language-md') {
+}
+    if (language === 'language-md') {
     return `@app.cell(hide_code=True)
 def _():
     mo.md("""
 ${code.split('\n').map(line => '    ' + line).join('\n')}
     """)
 `;
-  }
+}
 }
 
 function generateNotebook(cells) {
@@ -132,13 +159,13 @@ function createButton(codeElement, config = buttonSettings) {
   button.style.filter = config.filter;
   button.innerHTML = config.icon;
 
-  button.addEventListener("mouseover", function () {
+  button.addEventListener("mouseover", function() {
     button.style.filter = "grayscale(0%)";
   });
-  button.addEventListener("mouseout", function () {
+  button.addEventListener("mouseout", function() {
     button.style.filter = config.filter;
   });
-  button.addEventListener('click', function (e) {
+  button.addEventListener('click', function(e) {
     e.preventDefault();
     const code = generateNotebook(generateCell(codeElement.textContent));
     const encodedCode = encodeURIComponent(code);
@@ -153,7 +180,7 @@ function createButton(codeElement, config = buttonSettings) {
  * Adds interactive buttons to code blocks that open the code in a Marimo playground.
  * This uses any data attributes on <marimo-button> to override defaults.
  */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   document.querySelectorAll('script[type="text/x-marimo-snippets-config"]').forEach(script => {
     eval(script.textContent);
   });
@@ -178,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
  * Replaces code blocks with inline marimo notebooks.
  * This uses any data attributes on <marimo-iframe> to override defaults.
  */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   const marimoFrames = document.querySelectorAll("marimo-iframe");
   marimoFrames.forEach(marimoFrame => {
     // Merge data attribute config with global iframeSettings.
@@ -187,8 +214,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (preElements.length === 0) {
       return;
     }
+    console.log(preElements);
     const cells = Array.from(preElements).map((element) => {
       const classNames = element.children[0].classList.value.split(/\s+/);
+      console.log(element.textContent, classNames);
       return generateCell(element.textContent, classNames);
     });
 
@@ -202,6 +231,8 @@ document.addEventListener("DOMContentLoaded", function () {
     iframe.style.margin = iframeConfig.margin;
 
     const encodedCode = encodeURIComponent(code);
+    console.log(encodedCode);
+    console.log(code);
     const mode = iframeConfig.showCode === 'false' ? 'read' : 'edit';
     const url = `${iframeConfig.url}?${iframeConfig.paramName}=${encodedCode}&embed=true&show-chrome=false&mode=${mode}&show-code=${iframeConfig.showCode}`;
     iframe.src = url;
@@ -209,3 +240,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+</script>
