@@ -99,13 +99,13 @@ function configureMarimoIframes(settings = {}) {
 
 function generateCell(code, classNames) {
   const language = classNames.find(className => className.startsWith('language-'));
-  if (language === 'language-python'){
+  if (language && (language.includes('py'))){
     return `@app.cell
 def _():
 ${code.split('\n').map(line => '    ' + line).join('\n')}
 `;
 }
-    if (language === 'language-md') {
+    if (language && (language.includes('md'))){
     return `@app.cell(hide_code=True)
 def _():
     mo.md("""
