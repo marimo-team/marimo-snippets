@@ -248,8 +248,3 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
-
-
-```python
-print("hello world")
-```
