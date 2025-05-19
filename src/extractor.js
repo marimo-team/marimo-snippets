@@ -70,15 +70,15 @@ function configureMarimoIframes(settings = {}) {
   iframeSettings = { ...iframeSettings, ...settings };
 }
 
-function generateCell(code, classNames) {
-  const language = classNames.find(className => className.startsWith('language-'));
-  if (language && (language.includes('py'))){
+function generateCell(code, kind="python") {
+
+  if (kind === "python") {
     return `@app.cell
 def _():
 ${code.split('\n').map(line => '    ' + line).join('\n')}
 `;
 }
-    if (language && (language.includes('md'))){
+    if (kind === "md") {
     return `@app.cell(hide_code=True)
 def _():
     mo.md("""
@@ -184,25 +184,18 @@ document.addEventListener("DOMContentLoaded", function() {
     // Merge data attribute config with global iframeSettings.
     const iframeConfig = overrideSettingsWithDataAttributes(marimoFrame, iframeSettings);
     
-    let contents = [],
-        md_code = "";
-    for (const child of marimoFrame.children) {
-      if (child.tagName === "PRE") {
-        if (md_code != "") {
-          contents.push(generateCell(md_code, ["language-md"]))
-          md_code = ""
-        }
-        contents.push(generateCell(child.textContent, child.children[0].classList.value.split(/\s+/)) + "\n")
-      } else {
-        md_code += child.outerHTML
-      }
-    }
+    console.log("marimoFrame", marimoFrame);
     
-    if (contents.length === 0) {
-      return;
-    }
+    const cells = Array.from(marimoFrame.children).map((element) => {
+      const allClassNames = Array.from(element.classList).concat(
+        Array.from(element.getElementsByTagName("*")).flatMap(el => Array.from(el.classList))
+      );
+      const kind = allClassNames.includes("language-python") ? "python" : "md";
 
-    const code = generateNotebook(contents.join("\n"));
+      return generateCell(element.textContent, kind);
+    });
+
+    const code = generateNotebook(cells.join("\n"));
 
     const iframe = document.createElement('iframe');
     iframe.style.height = iframeConfig.height;
@@ -218,4 +211,3 @@ document.addEventListener("DOMContentLoaded", function() {
     marimoFrame.replaceWith(iframe);
   });
 });
-

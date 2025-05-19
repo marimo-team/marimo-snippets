@@ -1,15 +1,19 @@
 <div>
 <marimo-iframe data-height="800px">
 
+```md
 ## hello there
 
 This is another tests.
+```
 
 ```python
 import marimo as mo
 ```
 
+```md
 This is something that totally does not get ignored for real
+```
 
 ```python
 slider = mo.ui.slider(1, 10)
@@ -100,15 +104,15 @@ function configureMarimoIframes(settings = {}) {
   iframeSettings = { ...iframeSettings, ...settings };
 }
 
-function generateCell(code, classNames) {
-  const language = classNames.find(className => className.startsWith('language-'));
-  if (language && (language.includes('py'))){
+function generateCell(code, kind="python") {
+
+  if (kind === "python") {
     return `@app.cell
 def _():
 ${code.split('\n').map(line => '    ' + line).join('\n')}
 `;
 }
-    if (language && (language.includes('md'))){
+    if (kind === "md") {
     return `@app.cell(hide_code=True)
 def _():
     mo.md("""
@@ -214,27 +218,18 @@ document.addEventListener("DOMContentLoaded", function() {
     // Merge data attribute config with global iframeSettings.
     const iframeConfig = overrideSettingsWithDataAttributes(marimoFrame, iframeSettings);
     
-    let contents = [],
-        md_code = "";
-    for (const child of marimoFrame.children) {
-      if (child.tagName === "PRE") {
-        if (md_code != "") {
-          contents.push(generateCell(md_code, ["language-md"]))
-          md_code = ""
-        }
-        contents.push(generateCell(child.textContent, child.children[0].classList.value.split(/\s+/)) + "\n")
-      } else {
-        console.log(child)
-        md_code += child.outerHTML
-      }
-    }
-    console.log(contents);
+    console.log("marimoFrame", marimoFrame);
     
-    if (contents.length === 0) {
-      return;
-    }
+    const cells = Array.from(marimoFrame.children).map((element) => {
+      const allClassNames = Array.from(element.classList).concat(
+        Array.from(element.getElementsByTagName("*")).flatMap(el => Array.from(el.classList))
+      );
+      const kind = allClassNames.includes("language-python") ? "python" : "md";
 
-    const code = generateNotebook(contents.join("\n"));
+      return generateCell(element.textContent, kind);
+    });
+
+    const code = generateNotebook(cells.join("\n"));
 
     const iframe = document.createElement('iframe');
     iframe.style.height = iframeConfig.height;
@@ -244,6 +239,7 @@ document.addEventListener("DOMContentLoaded", function() {
     iframe.style.margin = iframeConfig.margin;
 
     const encodedCode = encodeURIComponent(code);
+    console.log(encodedCode);
     console.log(code);
     const mode = iframeConfig.showCode === 'false' ? 'read' : 'edit';
     const url = `${iframeConfig.url}?${iframeConfig.paramName}=${encodedCode}&embed=true&show-chrome=false&mode=${mode}&show-code=${iframeConfig.showCode}`;
@@ -251,5 +247,9 @@ document.addEventListener("DOMContentLoaded", function() {
     marimoFrame.replaceWith(iframe);
   });
 });
-
 </script>
+
+
+```python
+print("hello world")
+```

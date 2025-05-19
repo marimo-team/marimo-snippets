@@ -110,9 +110,19 @@ The result of this snippet is shown below.
 <div>
 <marimo-iframe data-height="600px">
 
+```md
+# Introduction
+
+You can also add markdown cells to your notebooks.
+```
+
 ```python
 import marimo as mo
 ```
+
+## Alternatively
+
+But we can also pick up inline markdown as well. 
 
 ```python
 slider = mo.ui.slider(1, 10)
@@ -131,4 +141,6 @@ slider.value * "🍃"
 configureMarimoButtons({title: "Open in a marimo notebook"});
 configureMarimoIframes({height: "400px"});
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/@marimo-team/marimo-snippets@1"></script> -->
+<script src="extractor.js"></script>
