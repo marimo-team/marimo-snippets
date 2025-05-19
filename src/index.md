@@ -89,6 +89,12 @@ Multiple code blocks can be merged together to form a single notebook:
 <div>
 <marimo-iframe data-height="600px">
 
+```md
+# Introduction
+
+You can also add markdown cells to your notebooks.
+```
+
 ```python
 import marimo as mo
 ```
@@ -119,10 +125,6 @@ You can also add markdown cells to your notebooks.
 ```python
 import marimo as mo
 ```
-
-## Alternatively
-
-But we can also pick up inline markdown as well. 
 
 ```python
 slider = mo.ui.slider(1, 10)
