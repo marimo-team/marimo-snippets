@@ -72,20 +72,20 @@ function configureMarimoIframes(settings = {}) {
 
 function generateCell(code, classNames) {
   const language = classNames.find(className => className.startsWith('language-'));
-  if (language === 'language-python') {
+  if (language && (language.includes('py'))){
     return `@app.cell
 def _():
 ${code.split('\n').map(line => '    ' + line).join('\n')}
 `;
-  }
-  if (language === 'language-md') {
+}
+    if (language && (language.includes('md'))){
     return `@app.cell(hide_code=True)
 def _():
     mo.md("""
 ${code.split('\n').map(line => '    ' + line).join('\n')}
     """)
 `;
-  }
+}
 }
 
 function generateNotebook(cells) {
@@ -132,13 +132,13 @@ function createButton(codeElement, config = buttonSettings) {
   button.style.filter = config.filter;
   button.innerHTML = config.icon;
 
-  button.addEventListener("mouseover", function () {
+  button.addEventListener("mouseover", function() {
     button.style.filter = "grayscale(0%)";
   });
-  button.addEventListener("mouseout", function () {
+  button.addEventListener("mouseout", function() {
     button.style.filter = config.filter;
   });
-  button.addEventListener('click', function (e) {
+  button.addEventListener('click', function(e) {
     e.preventDefault();
     const code = generateNotebook(generateCell(codeElement.textContent));
     const encodedCode = encodeURIComponent(code);
@@ -153,7 +153,7 @@ function createButton(codeElement, config = buttonSettings) {
  * Adds interactive buttons to code blocks that open the code in a Marimo playground.
  * This uses any data attributes on <marimo-button> to override defaults.
  */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   document.querySelectorAll('script[type="text/x-marimo-snippets-config"]').forEach(script => {
     eval(script.textContent);
   });
@@ -178,21 +178,31 @@ document.addEventListener("DOMContentLoaded", function () {
  * Replaces code blocks with inline marimo notebooks.
  * This uses any data attributes on <marimo-iframe> to override defaults.
  */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   const marimoFrames = document.querySelectorAll("marimo-iframe");
   marimoFrames.forEach(marimoFrame => {
     // Merge data attribute config with global iframeSettings.
     const iframeConfig = overrideSettingsWithDataAttributes(marimoFrame, iframeSettings);
-    const preElements = marimoFrame.querySelectorAll(iframeConfig.elements);
-    if (preElements.length === 0) {
+    
+    let contents = [],
+        md_code = "";
+    for (const child of marimoFrame.children) {
+      if (child.tagName === "PRE") {
+        if (md_code != "") {
+          contents.push(generateCell(md_code, ["language-md"]))
+          md_code = ""
+        }
+        contents.push(generateCell(child.textContent, child.children[0].classList.value.split(/\s+/)) + "\n")
+      } else {
+        md_code += child.outerHTML
+      }
+    }
+    
+    if (contents.length === 0) {
       return;
     }
-    const cells = Array.from(preElements).map((element) => {
-      const classNames = element.children[0].classList.value.split(/\s+/);
-      return generateCell(element.textContent, classNames);
-    });
 
-    const code = generateNotebook(cells.join("\n"));
+    const code = generateNotebook(contents.join("\n"));
 
     const iframe = document.createElement('iframe');
     iframe.style.height = iframeConfig.height;
