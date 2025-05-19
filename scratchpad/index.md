@@ -1,21 +1,24 @@
 <div>
-<marimo-iframe>
+<marimo-iframe data-height="800px">
 
-```md
-# hello there
-```
+## hello there
+
+This is another tests.
 
 ```python
 import marimo as mo
 ```
 
-```md
 This is something that totally does not get ignored for real
-```
 
 ```python
 slider = mo.ui.slider(1, 10)
 slider
+```
+
+```md
+## It can be nice
+to allow for both?
 ```
 
 ```python
@@ -210,18 +213,28 @@ document.addEventListener("DOMContentLoaded", function() {
   marimoFrames.forEach(marimoFrame => {
     // Merge data attribute config with global iframeSettings.
     const iframeConfig = overrideSettingsWithDataAttributes(marimoFrame, iframeSettings);
-    const preElements = marimoFrame.querySelectorAll(iframeConfig.elements);
-    if (preElements.length === 0) {
+    
+    let contents = [],
+        md_code = "";
+    for (const child of marimoFrame.children) {
+      if (child.tagName === "PRE") {
+        if (md_code != "") {
+          contents.push(generateCell(md_code, ["language-md"]))
+          md_code = ""
+        }
+        contents.push(generateCell(child.textContent, child.children[0].classList.value.split(/\s+/)) + "\n")
+      } else {
+        console.log(child)
+        md_code += child.outerHTML
+      }
+    }
+    console.log(contents);
+    
+    if (contents.length === 0) {
       return;
     }
-    console.log(preElements);
-    const cells = Array.from(preElements).map((element) => {
-      const classNames = element.children[0].classList.value.split(/\s+/);
-      console.log(element.textContent, classNames);
-      return generateCell(element.textContent, classNames);
-    });
 
-    const code = generateNotebook(cells.join("\n"));
+    const code = generateNotebook(contents.join("\n"));
 
     const iframe = document.createElement('iframe');
     iframe.style.height = iframeConfig.height;
@@ -231,7 +244,6 @@ document.addEventListener("DOMContentLoaded", function() {
     iframe.style.margin = iframeConfig.margin;
 
     const encodedCode = encodeURIComponent(code);
-    console.log(encodedCode);
     console.log(code);
     const mode = iframeConfig.showCode === 'false' ? 'read' : 'edit';
     const url = `${iframeConfig.url}?${iframeConfig.paramName}=${encodedCode}&embed=true&show-chrome=false&mode=${mode}&show-code=${iframeConfig.showCode}`;
