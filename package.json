@@ -1,6 +1,6 @@
 {
   "name": "@marimo-team/marimo-snippets",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "files": [
     "src/exctractor.js"
   ],
@@ -13,7 +13,13 @@
     "url": "https://github.com/marimo-team/marimo-snippets"
   },
   "main": "src/extractor.js",
-  "keywords": ["Python", "notebook", "marimo", "pyodide", "WebAssembly"],
+  "keywords": [
+    "Python",
+    "notebook",
+    "marimo",
+    "pyodide",
+    "WebAssembly"
+  ],
   "author": "marimo-team",
   "license": "Apache-2.0"
 }
