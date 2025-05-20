@@ -11,7 +11,7 @@ on:
     inputs:
       tag:
         description: 'Tag to release (e.g., 1.2.3)'
-        required: false
+        required: true
 
 jobs:
   release:
