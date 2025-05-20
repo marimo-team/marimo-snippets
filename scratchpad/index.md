@@ -1,3 +1,37 @@
+<div>
+<marimo-iframe data-height="800px">
+
+```md
+## hello there
+
+This is another tests.
+```
+
+```python
+import marimo as mo
+```
+
+```md
+This is something that totally does not get ignored for real
+```
+
+```python
+slider = mo.ui.slider(1, 10)
+slider
+```
+
+```md
+## It can be nice
+to allow for both?
+```
+
+```python
+slider.value * "🍃"
+```
+</marimo-iframe>
+</div>
+
+<script>
 let buttonSettings = {
   elements: ['pre'],
   title: 'Open code in an interactive playground',
@@ -205,9 +239,12 @@ document.addEventListener("DOMContentLoaded", function() {
     iframe.style.margin = iframeConfig.margin;
 
     const encodedCode = encodeURIComponent(code);
+    console.log(encodedCode);
+    console.log(code);
     const mode = iframeConfig.showCode === 'false' ? 'read' : 'edit';
     const url = `${iframeConfig.url}?${iframeConfig.paramName}=${encodedCode}&embed=true&show-chrome=false&mode=${mode}&show-code=${iframeConfig.showCode}`;
     iframe.src = url;
     marimoFrame.replaceWith(iframe);
   });
 });
+</script>
