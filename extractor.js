@@ -23,6 +23,7 @@ let iframeSettings = {
   border: '1px solid #ddd',
   borderRadius: '4px',
   margin: '1rem 0',
+  showCode: 'true',
   url: 'https://marimo.app',
   paramName: 'code'
 };
@@ -61,6 +62,7 @@ function configureMarimoButtons(settings = {}) {
  * @param {string} [settings.border='1px solid #ddd'] - Border style of the iframe
  * @param {string} [settings.borderRadius='4px'] - Corner radius of the iframe
  * @param {string} [settings.margin='1rem 0'] - Margin around the iframe
+ * @param {string} [settings.showCode='true'] - Whether to show the notebook's code
  * @param {string} [settings.url='https://marimo.app'] - Base URL for the Marimo instance
  * @param {string} [settings.paramName='code'] - Query parameter name for the code
  */
@@ -68,11 +70,22 @@ function configureMarimoIframes(settings = {}) {
   iframeSettings = { ...iframeSettings, ...settings };
 }
 
-function generateCell(code) {
-  return `@app.cell
+function generateCell(code, kind="python") {
+
+  if (kind === "python") {
+    return `@app.cell
 def _():
 ${code.split('\n').map(line => '    ' + line).join('\n')}
 `;
+}
+    if (kind === "md") {
+    return `@app.cell(hide_code=True)
+def _():
+    mo.md("""
+${code.split('\n').map(line => '    ' + line).join('\n')}
+    """)
+`;
+}
 }
 
 function generateNotebook(cells) {
@@ -170,13 +183,16 @@ document.addEventListener("DOMContentLoaded", function() {
   marimoFrames.forEach(marimoFrame => {
     // Merge data attribute config with global iframeSettings.
     const iframeConfig = overrideSettingsWithDataAttributes(marimoFrame, iframeSettings);
-    const preElements = marimoFrame.querySelectorAll(iframeConfig.elements);
-    if (preElements.length === 0) {
-      return;
-    }
+    
+    console.log("marimoFrame", marimoFrame);
+    
+    const cells = Array.from(marimoFrame.children).map((element) => {
+      const allClassNames = Array.from(element.classList).concat(
+        Array.from(element.getElementsByTagName("*")).flatMap(el => Array.from(el.classList))
+      );
+      const kind = allClassNames.includes("language-python") ? "python" : "md";
 
-    const cells = Array.from(preElements).map((element) => {
-      return generateCell(element.textContent);
+      return generateCell(element.textContent, kind);
     });
 
     const code = generateNotebook(cells.join("\n"));
@@ -189,9 +205,9 @@ document.addEventListener("DOMContentLoaded", function() {
     iframe.style.margin = iframeConfig.margin;
 
     const encodedCode = encodeURIComponent(code);
-    const url = `${iframeConfig.url}?${iframeConfig.paramName}=${encodedCode}&embed=true&show-chrome=false`;
+    const mode = iframeConfig.showCode === 'false' ? 'read' : 'edit';
+    const url = `${iframeConfig.url}?${iframeConfig.paramName}=${encodedCode}&embed=true&show-chrome=false&mode=${mode}&show-code=${iframeConfig.showCode}`;
     iframe.src = url;
     marimoFrame.replaceWith(iframe);
   });
 });
-
