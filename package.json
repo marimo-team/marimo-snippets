@@ -21,5 +21,6 @@
     "WebAssembly"
   ],
   "author": "marimo-team",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.28.2"
 }
