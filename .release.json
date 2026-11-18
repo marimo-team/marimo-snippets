@@ -1,0 +1,33 @@
+{
+  "repository": "marimo-team/marimo-snippets",
+  "files": [
+    "package.json"
+  ],
+  "command": [
+    "pnpm",
+    "release"
+  ],
+  "docs": "RELEASING.md",
+  "checks": [
+    [
+      "pnpm",
+      "install",
+      "--lockfile-only",
+      "--frozen-lockfile",
+      "--ignore-scripts"
+    ],
+    [
+      "node",
+      "--check",
+      "src/extractor.js"
+    ]
+  ],
+  "manifest": "package.json",
+  "prepare": [
+    "npm",
+    "version",
+    "--no-git-tag-version",
+    "--ignore-scripts",
+    "--package-lock=false"
+  ]
+}
